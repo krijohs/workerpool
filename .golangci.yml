@@ -1,0 +1,62 @@
+service:
+  # use the fixed version to not introduce new linters unexpectedly
+  golangci-lint-version: '1.47.2'
+
+run:
+  go: '1.18'
+  timeout: 1m
+  tests: false
+
+linters:
+  enable-all: true
+  disable:
+    - containedctx
+    - depguard
+    - dogsled
+    - exhaustive
+    - exhaustivestruct
+    - gci
+    - gochecknoglobals
+    - gocritic
+    - godot
+    - godox
+    - goerr113
+    - goimports
+    - gomnd
+    - ifshort
+    - ireturn
+    - lll
+    - maligned
+    - misspell
+    - nlreturn
+    - prealloc
+    - tagliatelle
+    - testpackage
+    - varnamelen
+    - wsl
+
+linters-settings:
+  wrapcheck:
+    ignoreSigs:
+      - .Errorf(
+      - errors.New(
+      - errors.Unwrap(
+      - .Wrap(
+      - .Wrapf(
+      - .WithMessage(
+      - .WithMessagef(
+      - .WithStack(
+      - .Err(
+
+  gofumpt:
+    lang-version: '1.18'
+    extra-rules: true
+
+  govet:
+    check-shadowing: true
+    enable-all: true
+    disable:
+      - fieldalignment
+
+  stylecheck:
+    go: '1.18'
