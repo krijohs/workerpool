@@ -133,8 +133,7 @@ func (p *Pool[T]) Results() (chan JobResult[T], error) {
 	return p.resultCh, nil
 }
 
-// Wait will make the pool stop accepting new jobs and wait for the jobs in the pool
-// to be processed before returing.
+// Wait will wait for the jobs in the pool to be processed and then return.
 func (p *Pool[T]) Wait(ctx context.Context) error {
 	if err := p.checkRunning(); err != nil {
 		return err
@@ -142,8 +141,8 @@ func (p *Pool[T]) Wait(ctx context.Context) error {
 
 	doneCh := make(chan struct{})
 	go func() {
-		p.cancel()
 		p.jobsWg.Wait()
+		p.cancel()
 		close(p.jobCh)
 		close(p.resultCh)
 		p.workerWg.Wait()
