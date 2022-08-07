@@ -67,8 +67,8 @@ func (p *Pool[T]) Start(ctx context.Context) {
 
 func (p *Pool[T]) setRunning(isRunning bool) {
 	p.mu.Lock()
+	defer p.mu.Unlock()
 	p.isRunning = isRunning
-	p.mu.Unlock()
 }
 
 func (p *Pool[T]) worker() {
