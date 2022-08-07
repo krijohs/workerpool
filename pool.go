@@ -112,10 +112,10 @@ func (p *Pool[T]) Add(ctx context.Context, fn JobFn[T]) error {
 
 func (p *Pool[T]) checkRunning() error {
 	p.mu.RLock()
+	defer p.mu.RUnlock()
 	if !p.isRunning {
 		return errors.New("pool is not running")
 	}
-	p.mu.RUnlock()
 
 	return nil
 }
